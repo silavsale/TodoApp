@@ -48,7 +48,11 @@ function TodoList() {
         method: 'DELETE',
       })
 
-      setCurrentPage({ page: currentPage.page })
+      if (todos.length === 1 && currentPage.page > 1) {
+        setCurrentPage({ page: currentPage.page - 1 })
+      } else {
+        setCurrentPage({ page: currentPage.page })
+      }
     } catch (error) {
       console.error(error)
     }
