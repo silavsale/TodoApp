@@ -14,12 +14,14 @@ function TodoList() {
   useEffect(() => {
     const fetchTodos = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3000/todos?email=${user.email}&page=${currentPage.page}&limit=10`,
-        )
-        const data = await response.json()
-        setTodos(data.todos)
-        setTotalPages(data.totalPages)
+        if (user) {
+          const response = await fetch(
+            `http://localhost:3000/todos?email=${user.email}&page=${currentPage.page}&limit=10`,
+          )
+          const data = await response.json()
+          setTodos(data.todos)
+          setTotalPages(data.totalPages)
+        }
       } catch (error) {
         console.error(error)
       }
@@ -117,7 +119,7 @@ function TodoList() {
           </button>
         </div>
       </div>
-      <Logout />
+      {/* <Logout /> */}
     </div>
   )
 }
