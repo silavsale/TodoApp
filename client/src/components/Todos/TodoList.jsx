@@ -29,6 +29,7 @@ function TodoList() {
 
   const handleAddTodo = async (newTodo) => {
     try {
+      newTodo.todo_responsible = user.email
       await fetch('http://localhost:3000/todos/add', {
         method: 'POST',
         headers: {

@@ -1,11 +1,7 @@
 import React, { useState } from 'react'
-import { useAuthState } from 'react-firebase-hooks/auth'
-import { auth } from '../../middleware/firebase'
 import ButtonNav from '../sharedComponents/Buttons/ButtonNav'
 
 function AddTodo({ handleAddTodo }) {
-  const [user] = useAuthState(auth)
-  const userEmail = user.email
   const [todo, setTodo] = useState({
     todo_description: '',
     todo_responsible: '',
@@ -19,7 +15,6 @@ function AddTodo({ handleAddTodo }) {
     setTodo({
       ...todo,
       [name]: value,
-      todo_responsible: userEmail,
     })
   }
 
