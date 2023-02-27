@@ -21,7 +21,7 @@ function TodoList() {
         setTodos(data.todos)
         setTotalPages(data.totalPages)
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     }
     fetchTodos()
@@ -37,10 +37,8 @@ function TodoList() {
         body: JSON.stringify(newTodo),
       })
       setCurrentPage({ page: currentPage.page })
-      // const data = await response.json()
-      // setTodos([data.newTodo, ...todos])
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 
@@ -49,23 +47,19 @@ function TodoList() {
       await fetch(`http://localhost:3000/todos/${id}`, {
         method: 'DELETE',
       })
-      // const updatedTodos = todos.filter((todo) => todo._id !== id)
-      // setTodos(updatedTodos)
-      // setCurrentPage(() => currentPage)
+
       setCurrentPage({ page: currentPage.page })
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 
   const handlePrevPage = () => {
-    // setCurrentPage((prevPage) => prevPage - 1)
     console.log('currentPage', currentPage)
     setCurrentPage({ page: currentPage.page - 1 })
   }
 
   const handleNextPage = () => {
-    // setCurrentPage((prevPage) => prevPage + 1)
     setCurrentPage({ page: currentPage.page + 1 })
   }
 

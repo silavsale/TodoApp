@@ -32,7 +32,7 @@ export function About() {
       </ul>
       <p>
         For more information, check out the source code on{' '}
-        <a href='https://gitlab.com/me6171208/todoapp'>GitLab</a>.
+        <a href='https://github.com/silavsale/TodoApp'>GitLab</a>.
       </p>
     </div>
   )

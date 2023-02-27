@@ -20,7 +20,7 @@ mongoose.connect(db, { useNewUrlParser: true })
 const connection = mongoose.connection
 
 connection.once("open", function () {
-  console.log("MongoDB database connection established successfully")
+  console.info("MongoDB database connection established successfully")
 })
 
 todoRoutes.route("/").get(async function (req, res) {
@@ -90,7 +90,7 @@ todoRoutes.route("/add").post(async function (req, res) {
 todoRoutes.route("/:id").delete(function (req, res) {
   Todo.findByIdAndRemove(req.params.id, function (err) {
     if (err) {
-      console.log(err)
+      console.error(err)
       res.status(500).json({ error: "Failed to delete todo" })
     } else {
       res.json({ message: "Todo successfully deleted" })
@@ -101,5 +101,5 @@ todoRoutes.route("/:id").delete(function (req, res) {
 app.use("/todos", todoRoutes)
 
 app.listen(PORT, function () {
-  console.log("Server is running on Port: " + PORT)
+  console.info("Server is running on Port: " + PORT)
 })
