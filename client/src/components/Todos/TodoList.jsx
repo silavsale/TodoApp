@@ -8,36 +8,37 @@ import ButtonDelete from '../sharedComponents/Buttons/ButtonDelete'
 function TodoList() {
   const [todos, setTodos] = useState([])
   const [user] = useAuthState(auth)
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState({ page: 1 })
   const [totalPages, setTotalPages] = useState(0)
 
   useEffect(() => {
     const fetchTodos = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/todos?email=${user.email}&page=${currentPage}&limit=10`,
+          `http://localhost:3000/todos?email=${user.email}&page=${currentPage.page}&limit=10`,
         )
         const data = await response.json()
-        await setTodos(data.todos)
-        await setTotalPages(data.totalPages)
+        setTodos(data.todos)
+        setTotalPages(data.totalPages)
       } catch (error) {
         console.log(error)
       }
     }
     fetchTodos()
-  }, [todos])
+  }, [currentPage])
 
   const handleAddTodo = async (newTodo) => {
     try {
-      const response = await fetch('http://localhost:3000/todos/add', {
+      await fetch('http://localhost:3000/todos/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(newTodo),
       })
-      const data = await response.json()
-      setTodos([...todos, data])
+      setCurrentPage({ page: currentPage.page })
+      // const data = await response.json()
+      // setTodos([data.newTodo, ...todos])
     } catch (error) {
       console.log(error)
     }
@@ -48,19 +49,24 @@ function TodoList() {
       await fetch(`http://localhost:3000/todos/${id}`, {
         method: 'DELETE',
       })
-      const updatedTodos = todos.filter((todo) => todo._id !== id)
-      setTodos(updatedTodos)
+      // const updatedTodos = todos.filter((todo) => todo._id !== id)
+      // setTodos(updatedTodos)
+      // setCurrentPage(() => currentPage)
+      setCurrentPage({ page: currentPage.page })
     } catch (error) {
       console.log(error)
     }
   }
 
   const handlePrevPage = () => {
-    setCurrentPage((prevPage) => prevPage - 1)
+    // setCurrentPage((prevPage) => prevPage - 1)
+    console.log('currentPage', currentPage)
+    setCurrentPage({ page: currentPage.page - 1 })
   }
 
   const handleNextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1)
+    // setCurrentPage((prevPage) => prevPage + 1)
+    setCurrentPage({ page: currentPage.page + 1 })
   }
 
   return (
@@ -84,7 +90,7 @@ function TodoList() {
           <p className='bg-blue-500 rounded p-1 m-2 dark:text-text-dark text-text-light'>
             Page:{' '}
             <span className='font-bold text-button-text-light dark:bg-button-bg-dark bg-button-bg-light rounded p-2'>
-              {currentPage}
+              {currentPage.page}
             </span>{' '}
             of{' '}
             <span className='font-bold text-button-text-light dark:bg-button-bg-dark bg-button-bg-light rounded p-2'>
@@ -96,7 +102,7 @@ function TodoList() {
           <button
             className='bg-button-bg-light dark:bg-button-bg-dark hover:bg-button-bg-hover-light
             dark:hover:bg-button-nav-bg-hover-dark text-button-text-light dark:text-button-text-dark font-bold py-1 px-2 rounded'
-            disabled={currentPage === 1}
+            disabled={currentPage.page === 1}
             onClick={handlePrevPage}
           >
             Prev
@@ -104,7 +110,7 @@ function TodoList() {
           <button
             className='bg-button-bg-light dark:bg-button-bg-dark hover:bg-button-bg-hover-light
             dark:hover:bg-button-nav-bg-hover-dark text-button-text-light dark:text-button-text-dark font-bold py-1 px-2 rounded'
-            disabled={currentPage === totalPages}
+            disabled={currentPage.page === totalPages}
             onClick={handleNextPage}
           >
             {' '}

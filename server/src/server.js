@@ -40,12 +40,12 @@ todoRoutes.route("/").get(async function (req, res) {
     .sort([["_id", -1]])
     .skip(skipIndex)
     .limit(limit)
-  // const todos = await Todo.find(filter).limit(limit).skip(skipIndex)
 
   res.send({
     todos: todos,
     totalPages: totalPages,
     currentPage: page,
+    todosCount: count,
   })
 })
 
@@ -80,7 +80,7 @@ todoRoutes.route("/add").post(async function (req, res) {
   await todo
     .save()
     .then((todo) => {
-      res.status(200).json({ todo: "todo added successfully" })
+      res.status(200).json({ newTodo: todo })
     })
     .catch((err) => {
       res.status(400).send("adding new todo failed")

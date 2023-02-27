@@ -3,7 +3,7 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '../../middleware/firebase'
 import ButtonNav from '../sharedComponents/Buttons/ButtonNav'
 
-function AddTodo() {
+function AddTodo({ handleAddTodo }) {
   const [user] = useAuthState(auth)
   const userEmail = user.email
   const [todo, setTodo] = useState({
@@ -25,25 +25,14 @@ function AddTodo() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    try {
-      const response = await fetch('http://localhost:3000/todos/add', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(todo),
-      })
+    await handleAddTodo(todo)
 
-      // Clear the input fields after submitting
-      setTodo({
-        todo_description: '',
-        todo_responsible: '',
-        todo_priority: '',
-        todo_completed: false,
-      })
-    } catch (error) {
-      console.log(error)
-    }
+    setTodo({
+      todo_description: '',
+      todo_responsible: '',
+      todo_priority: '',
+      todo_completed: false,
+    })
   }
 
   return (

@@ -1,3 +1,5 @@
+// This can be an additional module to Document API Endpoints
+// WIP
 import { Express, Request, Response } from "express"
 import swaggerJsdoc from "swagger-jsdoc"
 import swaggerUi from "swagger-ui-express"

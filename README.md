@@ -1,4 +1,4 @@
-# Responsive application build with MERN, Firebase, Tailwind CSS and Docker.
+## Responsive application build with MERN, Firebase, Tailwind CSS and Docker.
 
 - Login page - User need to Login to Create Todo and see all Todo's
 <p align="center">
@@ -20,10 +20,10 @@
 <img src="./docs/Todos-Dark.png" width="256" />
 </p>
 
-### To build and run app with Docker:
+### To run app with Docker:
 
-- populate .env file in `/client` folder with **firebase** creadantials.
-- populate .env file in `/server` folder with **mongodb** creadantials.
+- populate `.env` file in `/client` folder with **firebase** creadantials.
+- populate `.env` file in `/server` folder with **mongodb** creadantials.
 
 - Enter to `/client` folder, run `docker build -t my-mern-app-frontend .` to create image
 - Then `docker run -d --rm -p 5173:5173 --name my-mern-app-frontend my-mern-app-frontend`
